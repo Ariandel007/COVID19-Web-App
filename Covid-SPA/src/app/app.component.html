@@ -9,7 +9,7 @@
 
 <div class="row center">
   <form #createKclustersForm="ngForm" (ngSubmit)="agruparDatos()">
-    <label for="fname" class="row"><h3>Ingrese a cuantos clusters desea agrupar</h3></label>
+    <label for="fname" class="row"><h3>Ingrese los grupos de rieago que desee agrupar</h3></label>
     <input type="text" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="k">
     <button [disabled]="!createKclustersForm.valid" class="button button3" type="submit">Calcular</button>
   </form>

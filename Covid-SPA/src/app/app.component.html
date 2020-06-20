@@ -1,0 +1,67 @@
+<div class="topnav">
+  <a (click)="setSeccion(1)">Calcular Clusters</a>
+  <a (click)="setSeccion(2)">Lista de datos en el dataset</a>
+</div>
+
+<br/>
+
+<div *ngIf="seccion == 1">
+
+<div class="row center">
+  <form #createKclustersForm="ngForm" (ngSubmit)="agruparDatos()">
+    <label for="fname" class="row"><h3>Ingrese a cuantos clusters desea agrupar</h3></label>
+    <input type="text" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="k">
+    <button [disabled]="!createKclustersForm.valid" class="button button3" type="submit">Calcular</button>
+  </form>
+</div>
+
+<div>
+  <div class="row">
+    <div *ngFor="let g of groupedData.data; let i = index" class="column">
+      <h2>Cluster {{i + 1}}</h2>
+      <table>
+        <tr>
+          <th>ETAPA DE VIDA</th>
+          <th>EDAD</th>
+          <th>SEXO Toracico</th>
+          <th>DEPARTAMENTO</th>
+          <th>CATEGORIA </th>
+        </tr>
+        <tr *ngFor="let d of g">
+          <td>{{d.etapaDeVida}}</td>
+          <td>{{d.edad}}</td>
+          <td>{{d.sexo}}</td>
+          <td>{{d.departamento}}</td>
+          <td>{{d.categoria}}</td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div *ngIf="seccion == 2">
+  <div class="column">
+    <h2>LISTA COMPLETA DE FALLECIDOS</h2>
+    <table>
+      <tr>
+        <th>ETAPA DE VIDA</th>
+          <th>EDAD</th>
+          <th>SEXO Toracico</th>
+          <th>DEPARTAMENTO</th>
+          <th>CATEGORIA </th>
+
+      </tr>
+      <tr *ngFor="let d of deaths.data">
+        <td>{{d.etapaDeVida}}</td>
+        <td>{{d.edad}}</td>
+        <td>{{d.sexo}}</td>
+        <td>{{d.departamento}}</td>
+        <td>{{d.categoria}}</td>>
+      </tr>
+    </table>
+
+  </div>
+</div>

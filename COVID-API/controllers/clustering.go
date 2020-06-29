@@ -61,9 +61,9 @@ func GetDeaths(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": setAnalisis})
 }
 
-type Result struct{
-	Prediction int `json:"prediccion"`
-	Neighbors [][]float32 `json:"neighbors"`
+type ResultadoPrediccion struct{
+	Prediccion int `json:"prediccion"`
+	Vecinos []models.Analisis `json:"neighbors"`
 }
 func RealizarPrediccion(c *gin.Context){
 	Kparam := c.Param("k")
@@ -87,7 +87,7 @@ func RealizarPrediccion(c *gin.Context){
 	var datosEntrada models.Analisis
 	if c.BindJSON(&datosEntrada) == nil {
 		//Entra aqui si se logro convertir body request a tipo Analisis
-		prediction,neighbors:=knn.Predict_classification(trainData,[]float32{
+		prediccion,arrVecinos:=predict_classification(trainData,[]float32{
 			float32(datosEntrada.Temperatura),
 			float32(datosEntrada.TosSeca),
 			float32(datosEntrada.DolorGargante),
@@ -95,12 +95,29 @@ func RealizarPrediccion(c *gin.Context){
 			float32(datosEntrada.DificultadRespirar),
 			float32(datosEntrada.PresionPecho),
 			float32(datosEntrada.IncapacidadParaHablar),
-			},kvalue)
+			float32(datosEntrada.Diagnostico),
+			},Kparam)
 
-		var result Result
-		result.Prediction=prediction
-		result.Neighbors=neighbors
-		c.JSON(http.StatusOK, gin.H{"data": result})
+		var resultado []ResultadoPrediccion
+		var vecinos []models.Analisis
+		for i,v := range arrVecinos{
+			var n models.Analisis
+			n.Id=0
+			n.Temperatura =v[0]
+			n.TosSeca =v[1]
+			n.DolorGargante =v[2]
+			n.DolorCabeza =v[3]
+			n.DificultadRespirar =v[4]
+			n.PresionPecho =v[5]
+			n.IncapacidadParaHablar =v[6]
+			n.Diagnostico =v[7]
+			
+			vecinos=append(vecinos,n)
+		}
+
+		resultado.Prediccion=prediccion
+		resultado.Vecinos=vecinos
+		c.JSON(http.StatusOK, gin.H{"data": resultado})
 	}
 	//c.JSON(http.StatusUnauthorized, gin.H{"status": "Error al convertir data"})
 	

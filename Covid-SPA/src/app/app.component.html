@@ -85,35 +85,36 @@
 <div *ngIf="seccion == 3">
 
   <div class="row center">
-    <form class="form">
+    <form class="form" #knndata="ngForm" (ngSubmit)="realizarPrediccion()">
       <div class="form__group">
         <div class="form__input-container"><input type="number" step="any" class="form__input" placeholder="Tos seca"
-            [(ngModel)]="tosSeca"></div>
+            [(ngModel)]="paciente.tosSeca"></div>
         <div class="form__input-container"><input type="number" step="any" class="form__input"
-            placeholder="dolor garganta" [(ngModel)]="dolorGarganta" </div> </div> <div class="form__group">
-          <div class="form__input-container"><input type="number" step="any" class="form__input"
-              placeholder="dolor cabeza" [(ngModel)]="dolorCabeca"></div>
-          <div class="form__input-container"><input type="number" step="any" class="form__input"
-              placeholder="dificultad para respirar" [(ngModel)]="dificultadRespirar"></div>
-        </div>
-        <div class="form__group">
-          <div class="form__input-container"><input type="number" step="any" class="form__input"
-              placeholder="presion pecho" [(ngModel)]="presionPecho"></div>
-          <div class="form__input-container"><input type="number" step="any" class="form__input"
-              placeholder="incapacidad para hablar" [(ngModel)]="incapacidadHablar"></div>
-        </div>
+            placeholder="dolor garganta" [(ngModel)]="paciente.dolorGarganta"> </div>
+      </div>
+      <div class="form__group">
+        <div class="form__input-container"><input type="number" step="any" class="form__input"
+            placeholder="dolor cabeza" [(ngModel)]="paciente.dolorCabeza"></div>
+        <div class="form__input-container"><input type="number" step="any" class="form__input"
+            placeholder="dificultad para respirar" [(ngModel)]="paciente.dificultadRespirar"></div>
+      </div>
+      <div class="form__group">
+        <div class="form__input-container"><input type="number" step="any" class="form__input"
+            placeholder="presion pecho" [(ngModel)]="paciente.presionPecho"></div>
+        <div class="form__input-container"><input type="number" step="any" class="form__input"
+            placeholder="incapacidad para hablar" [(ngModel)]="paciente.incapacidadHablar"></div>
+      </div>
 
-        <div class="form__group last">
-          <label>Valor K del alrogitmo</label>
-          <div class="form__input-container"><input type="number" class="form__input" placeholder="k VALUE "
-              [(ngModel)]="kneighbors"></div>
-        </div>
-        <input type="submit" class="form__submit-btn">
+      <div class="form__group last">
+        <label>Valor K del alrogitmo</label>
+        <div class="form__input-container"><input type="number" class="form__input" placeholder="k VALUE "
+            [(ngModel)]="kneighbors"></div>
+      </div>
+      <input type="submit" class="form__submit-btn">
     </form>
 
     <div class="resultado_contenedor">
-      <input type="number" step="any" class="form__input"
-              placeholder="resultado" [(ngModel)]="prediccion">
+      {{prediccion}}
     </div>
   </div>
 </div>

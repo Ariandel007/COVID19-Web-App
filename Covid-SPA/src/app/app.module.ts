@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { ClusteringService } from './_services/clustering.service';
+import { AnalisisService } from './_services/analisis.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ClusteringService } from './_services/clustering.service';
     FormsModule
   ],
   providers: [
-    ClusteringService
+    ClusteringService,
+    AnalisisService
   ],
   bootstrap: [AppComponent]
 })

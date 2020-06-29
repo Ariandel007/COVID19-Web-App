@@ -61,9 +61,10 @@ func GetDeaths(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": setAnalisis})
 }
 
-type ResultadoPrediccion struct{
-	Prediccion int `json:"prediccion"`
-	Vecinos []models.Analisis `json:"neighbors"`
+type Vecino struct{
+	Dato models.Analisis `json:"neighbor"`
+	Distancia float32 `json:"distancia"`
+
 }
 func RealizarPrediccion(c *gin.Context){
 	Kparam := c.Param("k")
@@ -87,7 +88,7 @@ func RealizarPrediccion(c *gin.Context){
 	var datosEntrada models.Analisis
 	if c.BindJSON(&datosEntrada) == nil {
 		//Entra aqui si se logro convertir body request a tipo Analisis
-		prediccion,arrVecinos:=predict_classification(trainData,[]float32{
+		prediccion,arrResultado:=knn.Predict_classification(trainData,[]float32{
 			float32(datosEntrada.Temperatura),
 			float32(datosEntrada.TosSeca),
 			float32(datosEntrada.DolorGargante),
@@ -96,28 +97,25 @@ func RealizarPrediccion(c *gin.Context){
 			float32(datosEntrada.PresionPecho),
 			float32(datosEntrada.IncapacidadParaHablar),
 			float32(datosEntrada.Diagnostico),
-			},Kparam)
+			},kvalue)
 
-		var resultado []ResultadoPrediccion
-		var vecinos []models.Analisis
-		for i,v := range arrVecinos{
-			var n models.Analisis
-			n.Id=0
-			n.Temperatura =v[0]
-			n.TosSeca =v[1]
-			n.DolorGargante =v[2]
-			n.DolorCabeza =v[3]
-			n.DificultadRespirar =v[4]
-			n.PresionPecho =v[5]
-			n.IncapacidadParaHablar =v[6]
-			n.Diagnostico =v[7]
-			
-			vecinos=append(vecinos,n)
+		var arrVecinos []Vecino
+		for _,v := range arrResultado{
+			var n Vecino
+			n.Dato.Id=0
+			n.Dato.Temperatura =float64(v[0])
+			n.Dato.TosSeca =uint64(v[1])
+			n.Dato.DolorGargante =uint64(v[2])
+			n.Dato.DolorCabeza =uint64(v[3])
+			n.Dato.DificultadRespirar =uint64(v[4])
+			n.Dato.PresionPecho =uint64(v[5])
+			n.Dato.IncapacidadParaHablar =float64(v[6])
+			n.Dato.Diagnostico =uint64(v[7])
+			n.Distancia=v[8]
+			arrVecinos=append(arrVecinos,n)
 		}
 
-		resultado.Prediccion=prediccion
-		resultado.Vecinos=vecinos
-		c.JSON(http.StatusOK, gin.H{"data": resultado})
+		c.JSON(http.StatusOK, gin.H{"data":arrVecinos,"prediccion":prediccion})
 	}
 	//c.JSON(http.StatusUnauthorized, gin.H{"status": "Error al convertir data"})
 	

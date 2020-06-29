@@ -8,7 +8,7 @@ import (
 )
 func euclidean_distance(row1 ,row2 []float32) (float32){
 	distance:=0.0
-	for i:=0; i<len(row1)-1;i++{
+	for i:=0; i<len(row1)-2;i++{
 		distance+=math.Pow(float64(row1[i]) - float64(row2[i]),2)
 	}
 	return float32(math.Sqrt(distance))
@@ -61,7 +61,7 @@ func get_most_repeated_elem(data []float32)int{
 	return int(res)
 }
 
-func predict_classification(train [][]float32,test_row []float32,num_neighbors int)(int, [][]float32){
+func Predict_classification(train [][]float32,test_row []float32,num_neighbors int)(int, [][]float32){
 	neighbors:=get_neighbors(train,test_row,num_neighbors)
 	output_values:=make([]float32,num_neighbors)
 	for k,v:= range neighbors{

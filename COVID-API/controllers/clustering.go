@@ -65,8 +65,9 @@ type Result struct{
 	Prediction int `json:"prediccion"`
 	Neighbors [][]float32 `json:"neighbors"`
 }
-func RealizarClustering(c *gin.Context){
+func RealizarPrediccion(c *gin.Context){
 	Kparam := c.Param("k")
+	kvalue,_:=strconv.Atoi(Kparam)
 	//Extrayendo y convirtiendo dataset
 	var trainData [][]float32
 	var setAnalisis []models.Analisis
@@ -79,14 +80,14 @@ func RealizarClustering(c *gin.Context){
 												float32(analisis.DificultadRespirar),
 												float32(analisis.PresionPecho),
 												float32(analisis.IncapacidadParaHablar),
-												float32(analisis.Diagnostico)})
+												float32(analisis.Diagnostico),
+												float32(0)})
 	}
 	//capturando datos de entrada delusuario
 	var datosEntrada models.Analisis
-	var datosEntrada []
 	if c.BindJSON(&datosEntrada) == nil {
 		//Entra aqui si se logro convertir body request a tipo Analisis
-		prediction,neighbors:=predict_classification(trainData,[]float32{
+		prediction,neighbors:=knn.Predict_classification(trainData,[]float32{
 			float32(datosEntrada.Temperatura),
 			float32(datosEntrada.TosSeca),
 			float32(datosEntrada.DolorGargante),
@@ -94,8 +95,7 @@ func RealizarClustering(c *gin.Context){
 			float32(datosEntrada.DificultadRespirar),
 			float32(datosEntrada.PresionPecho),
 			float32(datosEntrada.IncapacidadParaHablar),
-			float32(datosEntrada.Diagnostico),
-			},Kparam)
+			},kvalue)
 
 		var result Result
 		result.Prediction=prediction

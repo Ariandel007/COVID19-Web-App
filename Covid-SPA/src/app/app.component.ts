@@ -17,6 +17,16 @@ export class AppComponent implements OnInit  {
   k: number;
   seccion = 1;
 
+  //KNN
+  prediccion:number;
+  tosSeca:number;
+  dolorGarganta:number;
+  dolorCabeza:number;
+  dificultadRespirar:number;
+  presionPecho:number;
+  incapacidadHablar:number;
+  kneighbors:number;
+
   constructor(private clusteringService: ClusteringService, private analisisService: AnalisisService) {}
 
   ngOnInit(): void {
@@ -46,5 +56,11 @@ export class AppComponent implements OnInit  {
 
   setSeccion(n: number) {
     this.seccion = n;
+  }
+
+  realizarPrediccion():void{
+     this.analisisService.getPrediccion(this.kneighbors).subscribe((response)=>{
+       console.log(response)
+     })
   }
 }

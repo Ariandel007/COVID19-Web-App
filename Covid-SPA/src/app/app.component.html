@@ -1,52 +1,56 @@
 <div class="topnav">
   <a (click)="setSeccion(1)">Calcular Clusters</a>
   <a (click)="setSeccion(2)">Lista de datos en el dataset</a>
+  <a (click)="setSeccion(3)">Realizar prediccion</a>
 </div>
 
-<br/>
+<br />
 
 <div *ngIf="seccion == 1">
 
-<div class="row center">
-  <form #createKclustersForm="ngForm" (ngSubmit)="agruparDatos()">
-    <label for="fname" class="row"><h3>Ingrese los grupos de rieago que desee agrupar</h3></label>
-    <input type="text" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="k">
-    <button [disabled]="!createKclustersForm.valid" class="button button3" type="submit">Calcular</button>
-  </form>
-</div>
+  <div class="row center">
+    <form #createKclustersForm="ngForm" (ngSubmit)="agruparDatos()">
+      <label for="fname" class="row">
+        <h3>Ingrese los grupos de rieago que desee agrupar</h3>
+      </label>
+      <input type="text" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required
+        [(ngModel)]="k">
+      <button [disabled]="!createKclustersForm.valid" class="button button3" type="submit">Calcular</button>
+    </form>
+  </div>
 
-<div>
-  <div class="row">
-    <div *ngFor="let g of groupedData.data; let i = index" class="column">
-      <h2>Cluster {{i + 1}}</h2>
-      <table>
-        <tr>
-          <!-- <th>ID</th> -->
-          <th>Temperatura</th>
-          <th>Tos Seca</th>
-          <th>Dolor Garganta</th>
-          <th>Dificultad Respirar </th>
-          <th>Presion Pecho</th>
-          <th>Incapacidad Para hablar </th>
-          <th>Dolor Cabeza </th>
-          <th>Diagnostico </th>
-        </tr>
-        <tr *ngFor="let d of g">
-          <!-- <td>{{d.id}}</td> -->
-          <td>{{d.temperatura}}</td>
-          <td>{{d.tosSeca}}</td>
-          <td>{{d.dolorCabeza}}</td>
-          <td>{{d.dificultadRespirar}}</td>
-          <td>{{d.presionPecho}}</td>
-          <td>{{d.incapacidadParaHablar}}</td>
-          <td>{{d.dolorCabeza}}</td>
-          <td>{{d.diagnostico}}</td>
-        </tr>
-      </table>
+  <div>
+    <div class="row">
+      <div *ngFor="let g of groupedData.data; let i = index" class="column">
+        <h2>Cluster {{i + 1}}</h2>
+        <table>
+          <tr>
+            <!-- <th>ID</th> -->
+            <th>Temperatura</th>
+            <th>Tos Seca</th>
+            <th>Dolor Garganta</th>
+            <th>Dificultad Respirar </th>
+            <th>Presion Pecho</th>
+            <th>Incapacidad Para hablar </th>
+            <th>Dolor Cabeza </th>
+            <th>Diagnostico </th>
+          </tr>
+          <tr *ngFor="let d of g">
+            <!-- <td>{{d.id}}</td> -->
+            <td>{{d.temperatura}}</td>
+            <td>{{d.tosSeca}}</td>
+            <td>{{d.dolorCabeza}}</td>
+            <td>{{d.dificultadRespirar}}</td>
+            <td>{{d.presionPecho}}</td>
+            <td>{{d.incapacidadParaHablar}}</td>
+            <td>{{d.dolorCabeza}}</td>
+            <td>{{d.diagnostico}}</td>
+          </tr>
+        </table>
 
+      </div>
     </div>
   </div>
-</div>
 
 </div>
 
@@ -76,5 +80,40 @@
       </tr>
     </table>
 
+  </div>
+</div>
+<div *ngIf="seccion == 3">
+
+  <div class="row center">
+    <form class="form">
+      <div class="form__group">
+        <div class="form__input-container"><input type="number" step="any" class="form__input" placeholder="Tos seca"
+            [(ngModel)]="tosSeca"></div>
+        <div class="form__input-container"><input type="number" step="any" class="form__input"
+            placeholder="dolor garganta" [(ngModel)]="dolorGarganta" </div> </div> <div class="form__group">
+          <div class="form__input-container"><input type="number" step="any" class="form__input"
+              placeholder="dolor cabeza" [(ngModel)]="dolorCabeca"></div>
+          <div class="form__input-container"><input type="number" step="any" class="form__input"
+              placeholder="dificultad para respirar" [(ngModel)]="dificultadRespirar"></div>
+        </div>
+        <div class="form__group">
+          <div class="form__input-container"><input type="number" step="any" class="form__input"
+              placeholder="presion pecho" [(ngModel)]="presionPecho"></div>
+          <div class="form__input-container"><input type="number" step="any" class="form__input"
+              placeholder="incapacidad para hablar" [(ngModel)]="incapacidadHablar"></div>
+        </div>
+
+        <div class="form__group last">
+          <label>Valor K del alrogitmo</label>
+          <div class="form__input-container"><input type="number" class="form__input" placeholder="k VALUE "
+              [(ngModel)]="kneighbors"></div>
+        </div>
+        <input type="submit" class="form__submit-btn">
+    </form>
+
+    <div class="resultado_contenedor">
+      <input type="number" step="any" class="form__input"
+              placeholder="resultado" [(ngModel)]="prediccion">
+    </div>
   </div>
 </div>

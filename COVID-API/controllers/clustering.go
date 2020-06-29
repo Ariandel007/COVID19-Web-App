@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 	"strconv"
-
+	"../knn"
 	"../kmeans"
 	"../models"
 	"github.com/gin-gonic/gin"
@@ -59,4 +59,49 @@ func GetDeaths(c *gin.Context) {
 	var setAnalisis []models.Analisis
 	models.DB.Find(&setAnalisis)
 	c.JSON(http.StatusOK, gin.H{"data": setAnalisis})
+}
+
+type Result struct{
+	Prediction int `json:"prediccion"`
+	Neighbors [][]float32 `json:"neighbors"`
+}
+func RealizarClustering(c *gin.Context){
+	Kparam := c.Param("k")
+	//Extrayendo y convirtiendo dataset
+	var trainData [][]float32
+	var setAnalisis []models.Analisis
+	models.DB.Find(&setAnalisis)
+	for _, analisis := range setAnalisis {
+		trainData = append(trainData, []float32{float32(analisis.Temperatura),
+												float32(analisis.TosSeca),
+												float32(analisis.DolorGargante),
+												float32(analisis.DolorCabeza),
+												float32(analisis.DificultadRespirar),
+												float32(analisis.PresionPecho),
+												float32(analisis.IncapacidadParaHablar),
+												float32(analisis.Diagnostico)})
+	}
+	//capturando datos de entrada delusuario
+	var datosEntrada models.Analisis
+	var datosEntrada []
+	if c.BindJSON(&datosEntrada) == nil {
+		//Entra aqui si se logro convertir body request a tipo Analisis
+		prediction,neighbors:=predict_classification(trainData,[]float32{
+			float32(datosEntrada.Temperatura),
+			float32(datosEntrada.TosSeca),
+			float32(datosEntrada.DolorGargante),
+			float32(datosEntrada.DolorCabeza),
+			float32(datosEntrada.DificultadRespirar),
+			float32(datosEntrada.PresionPecho),
+			float32(datosEntrada.IncapacidadParaHablar),
+			float32(datosEntrada.Diagnostico),
+			},Kparam)
+
+		var result Result
+		result.Prediction=prediction
+		result.Neighbors=neighbors
+		c.JSON(http.StatusOK, gin.H{"data": result})
+	}
+	//c.JSON(http.StatusUnauthorized, gin.H{"status": "Error al convertir data"})
+	
 }

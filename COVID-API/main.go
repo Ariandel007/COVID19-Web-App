@@ -24,6 +24,7 @@ func main() {
 	r.GET("/clusters/:k", controllers.RealizarClustering)
 	r.GET("/data", controllers.GetDeaths)
 
+	r.POST("/prediccion/:k", controllers.RealizarPrediccion)
 	//correr el servidor
 	r.Run()
 }

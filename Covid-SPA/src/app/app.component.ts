@@ -1,27 +1,26 @@
-import { Component } from '@angular/core';
-import { ListDeaths } from './_models/list-deaths';
+import { Component, OnInit } from '@angular/core';
+import { ListAnalisis } from './_models/list-analisis';
 import { GroupedData } from './_models/grouped-data';
 import { ClusteringService } from './_services/clustering.service';
-import { DeathsService } from './_services/deaths.service';
+import { AnalisisService } from './_services/analisis.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit  {
   title = 'Covid-SPA';
 
-  deaths: ListDeaths;
+  analisis: ListAnalisis;
   groupedData?: GroupedData;
   k: number;
   seccion = 1;
 
-
-  constructor(private clusteringService: ClusteringService, private deathsService: DeathsService) {}
+  constructor(private clusteringService: ClusteringService, private analisisService: AnalisisService) {}
 
   ngOnInit(): void {
-    this.obtenerListaDeaths();
+    this.obtenerListaAnalisis();
   }
 
   agruparDatos(): void{
@@ -37,9 +36,9 @@ export class AppComponent {
     });
   }
 
-  obtenerListaDeaths(): void {
-    this.deathsService.getDeaths().subscribe( (response) => {
-      this.deaths = response;
+  obtenerListaAnalisis(): void {
+    this.analisisService.getAnalisis().subscribe( (response) => {
+      this.analisis = response;
     }, error => {
       console.log(error);
     });

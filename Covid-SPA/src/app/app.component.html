@@ -21,18 +21,24 @@
       <h2>Cluster {{i + 1}}</h2>
       <table>
         <tr>
-          <th>ETAPA DE VIDA</th>
-          <th>EDAD</th>
-          <th>SEXO</th>
-          <th>DEPARTAMENTO</th>
-          <th>CATEGORIA </th>
+          <!-- <th>ID</th> -->
+          <th>Temperatura</th>
+          <th>Tos Seca</th>
+          <th>Dolor Garganta</th>
+          <th>Dificultad Respirar </th>
+          <th>Presion Pecho</th>
+          <th>Incapacidad Para hablar </th>
+          <th>Dolor Cabeza </th>
         </tr>
         <tr *ngFor="let d of g">
-          <td>{{d.etapaDeVida}}</td>
-          <td>{{d.edad}}</td>
-          <td>{{d.sexo}}</td>
-          <td>{{d.departamento}}</td>
-          <td>{{d.categoria}}</td>
+          <!-- <td>{{d.id}}</td> -->
+          <td>{{d.temperatura}}</td>
+          <td>{{d.tosSeca}}</td>
+          <td>{{d.dolorCabeza}}</td>
+          <td>{{d.dificultadRespirar}}</td>
+          <td>{{d.presionPecho}}</td>
+          <td>{{d.incapacidadParaHablar}}</td>
+          <td>{{d.dolorCabeza}}</td>
         </tr>
       </table>
 
@@ -44,22 +50,27 @@
 
 <div *ngIf="seccion == 2">
   <div class="column">
-    <h2>LISTA COMPLETA DE FALLECIDOS</h2>
+    <h2>LISTA COMPLETA</h2>
     <table>
       <tr>
-        <th>ETAPA DE VIDA</th>
-          <th>EDAD</th>
-          <th>SEXO Toracico</th>
-          <th>DEPARTAMENTO</th>
-          <th>CATEGORIA </th>
-
+        <th>ID</th>
+        <th>Temperatura</th>
+        <th>Tos Seca</th>
+        <th>Dolor Garganta</th>
+        <th>Dificultad Respirar </th>
+        <th>Presion Pecho</th>
+        <th>Incapacidad Para hablar </th>
+        <th>Dolor Cabeza </th>
       </tr>
-      <tr *ngFor="let d of deaths.data">
-        <td>{{d.etapaDeVida}}</td>
-        <td>{{d.edad}}</td>
-        <td>{{d.sexo}}</td>
-        <td>{{d.departamento}}</td>
-        <td>{{d.categoria}}</td>>
+      <tr *ngFor="let d of analisis.data">
+        <td>{{d.id}}</td>
+        <td>{{d.temperatura}}</td>
+        <td>{{d.tosSeca}}</td>
+        <td>{{d.dolorCabeza}}</td>
+        <td>{{d.dificultadRespirar}}</td>
+        <td>{{d.presionPecho}}</td>
+        <td>{{d.incapacidadParaHablar}}</td>
+        <td>{{d.dolorCabeza}}</td>
       </tr>
     </table>
 

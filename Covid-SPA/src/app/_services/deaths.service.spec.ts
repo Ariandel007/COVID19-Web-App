@@ -1,6 +1,6 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { DeathsService } from './deaths.service';
+import { DeathsService } from './analisis.service';
 
 describe('Service: Diagnostic', () => {
   beforeEach(() => {

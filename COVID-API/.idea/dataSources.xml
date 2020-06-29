@@ -7,5 +7,17 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:G:\Proyectos\kmeans-para-malograr\kmeans-API\test.sqlite</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="data" uuid="3b273727-d61a-4c14-9a6e-c42363263e0d">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:G:\Proyectos\COVID19-Web-App\COVID-API\data.sqlite</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="test [2]" uuid="c8b80583-851e-46f7-8569-3d0c07929353">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:G:\Proyectos\COVID19-Web-App\COVID-API\test.sqlite</jdbc-url>
+    </data-source>
   </component>
 </project>

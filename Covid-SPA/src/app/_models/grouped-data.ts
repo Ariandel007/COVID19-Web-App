@@ -1,5 +1,5 @@
-import {Deaths} from './deaths';
+import {Analisis} from './analisis';
 
 export interface GroupedData {
-    data: Array<Deaths[]>;
+    data: Array<Analisis[]>;
   }

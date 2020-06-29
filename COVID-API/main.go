@@ -22,7 +22,7 @@ func main() {
 	models.ConnectDatabase()
 
 	r.GET("/clusters/:k", controllers.RealizarClustering)
-	r.GET("/deaths", controllers.GetDeaths)
+	r.GET("/data", controllers.GetDeaths)
 
 	//correr el servidor
 	r.Run()

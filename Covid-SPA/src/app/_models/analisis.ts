@@ -7,4 +7,5 @@ export interface Analisis {
     presionPecho: number;
     incapacidadParaHablar: number;
     dolorCabeza: number;
+    diagnostico: number;
   }

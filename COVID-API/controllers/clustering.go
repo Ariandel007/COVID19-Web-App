@@ -1,13 +1,13 @@
 package controllers
 
 import (
+	"net/http"
+	"strconv"
+
 	"../kmeans"
 	"../models"
 	"github.com/gin-gonic/gin"
-	"net/http"
-	"strconv"
 )
-
 
 func RealizarClustering(c *gin.Context) {
 	data := []kmeans.Punto{}
@@ -19,11 +19,11 @@ func RealizarClustering(c *gin.Context) {
 		data = append(data, kmeans.Punto{[]float64{
 			analisis.Temperatura, float64(analisis.TosSeca),
 			float64(analisis.DolorGargante), float64(analisis.DolorCabeza),
-			float64(analisis.DificultadRespirar), float64(analisis.PresionPecho), analisis.IncapacidadParaHablar}})
+			float64(analisis.DificultadRespirar), float64(analisis.PresionPecho), analisis.IncapacidadParaHablar, float64(analisis.Diagnostico)}})
 	}
 	param := c.Param("k")
 	k, _ := strconv.Atoi(param)
-	var clusters = kmeans.KMEANS(data, uint64(k), 5)
+	var clusters = kmeans.KMEANS(data, uint64(k), 0.19)
 
 	var listRes [][]models.Analisis
 
@@ -40,11 +40,15 @@ func RealizarClustering(c *gin.Context) {
 				d.DificultadRespirar = uint64(p.Entrada[4])
 				d.PresionPecho = uint64(p.Entrada[5])
 				d.IncapacidadParaHablar = p.Entrada[6]
+				d.Diagnostico = uint64(p.Entrada[7])
+				//d.Diagnostico = uint64(i)
+				//models.DB.Create(&d)
 
 				resultado = append(resultado, d)
 			}
 			listRes = append(listRes, resultado)
 		}
+
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": listRes})

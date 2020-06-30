@@ -25,7 +25,6 @@
         <h2>Cluster {{i + 1}}</h2>
         <table>
           <tr>
-            <!-- <th>ID</th> -->
             <th>Temperatura</th>
             <th>Tos Seca</th>
             <th>Dolor Garganta</th>
@@ -36,7 +35,6 @@
             <th>Diagnostico </th>
           </tr>
           <tr *ngFor="let d of g">
-            <!-- <td>{{d.id}}</td> -->
             <td>{{d.temperatura}}</td>
             <td>{{d.tosSeca}}</td>
             <td>{{d.dolorCabeza}}</td>
@@ -85,36 +83,26 @@
 <div *ngIf="seccion == 3">
 
   <div class="row center">
-    <form class="form" #knndata="ngForm" (ngSubmit)="realizarPrediccion()">
-      <div class="form__group">
-        <div class="form__input-container"><input type="number" step="any" class="form__input" placeholder="Tos seca"
-            [(ngModel)]="paciente.tosSeca"></div>
-        <div class="form__input-container"><input type="number" step="any" class="form__input"
-            placeholder="dolor garganta" [(ngModel)]="paciente.dolorGarganta"> </div>
-      </div>
-      <div class="form__group">
-        <div class="form__input-container"><input type="number" step="any" class="form__input"
-            placeholder="dolor cabeza" [(ngModel)]="paciente.dolorCabeza"></div>
-        <div class="form__input-container"><input type="number" step="any" class="form__input"
-            placeholder="dificultad para respirar" [(ngModel)]="paciente.dificultadRespirar"></div>
-      </div>
-      <div class="form__group">
-        <div class="form__input-container"><input type="number" step="any" class="form__input"
-            placeholder="presion pecho" [(ngModel)]="paciente.presionPecho"></div>
-        <div class="form__input-container"><input type="number" step="any" class="form__input"
-            placeholder="incapacidad para hablar" [(ngModel)]="paciente.incapacidadHablar"></div>
-      </div>
+    <input #box (keyup)="onKey(box.value)" type="text" placeholder="Ingrese N Vecinos">
 
-      <div class="form__group last">
-        <label>Valor K del alrogitmo</label>
-        <div class="form__input-container"><input type="number" class="form__input" placeholder="k VALUE "
-            [(ngModel)]="kneighbors"></div>
-      </div>
-      <input type="submit" class="form__submit-btn">
+    <form #getDiagnostic="ngForm" (ngSubmit)="realizarPrediccion()">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.temperatura">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.tosSeca">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.dolorGargante">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.dolorCabeza">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.dificultadRespirar">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.presionPecho">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.incapacidadParaHablar">
+
+      <button [disabled]="!getDiagnostic.valid" class="button button3" type="submit">Calcular</button>
     </form>
-
     <div class="resultado_contenedor">
-      {{prediccion}}
+      <div *ngIf="prediccion.data == 0">
+        El paciente esta sano
+      </div>
+      <div *ngIf="prediccion.data == 1">
+        El paciente esta enfermo
+      </div>
     </div>
   </div>
 </div>

@@ -6,17 +6,26 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Cors() gin.HandlerFunc {
+
+func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Writer.Header().Add("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
 		c.Next()
 	}
 }
-
 func main() {
 	r := gin.Default()
 
-	r.Use(Cors())
+	r.Use(CORSMiddleware())
 
 	// conectar a la base de datos
 	models.ConnectDatabase()
@@ -25,6 +34,8 @@ func main() {
 	r.GET("/data", controllers.GetDeaths)
 
 	r.POST("/prediccion/:k", controllers.RealizarPrediccion)
+	r.GET("/pred", controllers.GetPredicion)
+
 	//correr el servidor
 	r.Run()
 }

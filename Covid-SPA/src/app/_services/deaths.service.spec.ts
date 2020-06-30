@@ -1,15 +1,15 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { DeathsService } from './analisis.service';
+import { AnalisisService } from './analisis.service';
 
 describe('Service: Diagnostic', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DeathsService]
+      providers: [AnalisisService]
     });
   });
 
-  it('should ...', inject([DeathsService], (service: DeathsService) => {
+  it('should ...', inject([AnalisisService], (service: AnalisisService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -18,10 +18,10 @@ export class AppComponent implements OnInit  {
   seccion = 1;
 
   //KNN
-  prediccion:number;
-  kneighbors:any;
+  prediccion: any;
+  nVecinos: number;
 
-  paciente:any;
+  paciente: any = {};
 
   constructor(private clusteringService: ClusteringService, private analisisService: AnalisisService) {}
 
@@ -54,11 +54,28 @@ export class AppComponent implements OnInit  {
     this.seccion = n;
   }
 
-  realizarPrediccion():void{
-    console.log(this.kneighbors);
-     this.analisisService.getPrediccion(this.kneighbors,this.paciente).subscribe((response)=>{
-       console.log(response)
-       this.prediccion=response.prediccion
-     })
+  setVecinos(n: number) {
+    this.nVecinos = n;
+    console.log(n);
+  }
+
+  onKey(value: string) {
+    this.nVecinos = Number(value);
+    console.log(this.nVecinos);
+  }
+
+  realizarPrediccion(): void{
+    this.analisisService.getPrediccion(this.nVecinos, this.paciente).subscribe((response) => {
+      console.log(response);
+      this.obtenerDiagnostico();
+    });
+  }
+
+  obtenerDiagnostico(): void {
+    this.analisisService.getDiagnosis().subscribe((response) => {
+      this.prediccion = response;
+    }, error => {
+        console.log(error);
+      });
   }
 }

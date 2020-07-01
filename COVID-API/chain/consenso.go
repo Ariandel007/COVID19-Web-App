@@ -26,7 +26,7 @@ const (
 )
 var direccion_nodo string
 
-var resultadoConsenso int // solo server
+var ResultadoConsenso int // solo server
 
 type SharedData struct{
 	Dataset [][]float32
@@ -184,7 +184,7 @@ func registrarServer() {
 	}
 }
 
-func iniciarCadena(){
+func IniciarCadena(){
 	direccion_nodo = myIp()
 	hostServer=direccion_nodo
 	fmt.Println("My ip", direccion_nodo)
@@ -237,9 +237,9 @@ func handleConsensoDeConsensos(conn net.Conn ){
 			}
 		}
 		if ca > cb {
-			resultadoConsenso=predA
+			ResultadoConsenso=predA
 		} else {
-			resultadoConsenso=predB
+			ResultadoConsenso=predB
 		}
 		info = map[string]int{}
 	}

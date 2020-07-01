@@ -60,7 +60,7 @@ func RealizarClustering(c *gin.Context) {
 }
 
 func GetDeaths(c *gin.Context) {
-	fmt.Println("DEMOSTRACION DE SI CAMBIA O NO OO :%s",chain.resultadoConsenso)
+	fmt.Println("DEMOSTRACION DE SI CAMBIA O NO OO :%s",chain.ResultadoConsenso)
 	var setAnalisis []models.Analisis
 	models.DB.Find(&setAnalisis)
 	c.JSON(http.StatusOK, gin.H{"data": setAnalisis})
@@ -94,7 +94,7 @@ func RealizarPrediccion(c *gin.Context) {
 
 	if c.Bind(&datosEntrada) == nil {
 		//Entra aqui si se logro convertir body request a tipo Analisis
-		prediccion, arrResultado := knn.Predict_classification(trainData, []float32{
+		inputData:=[]float32{
 			float32(datosEntrada.Temperatura),
 			float32(datosEntrada.TosSeca),
 			float32(datosEntrada.DolorGargante),
@@ -103,7 +103,8 @@ func RealizarPrediccion(c *gin.Context) {
 			float32(datosEntrada.PresionPecho),
 			float32(datosEntrada.IncapacidadParaHablar),
 			float32(datosEntrada.Diagnostico),
-		}, kvalue)
+		}
+		prediccion, arrResultado := knn.Predict_classification(trainData, inputData, kvalue)
 
 		var arrVecinos []Vecino
 		for _, v := range arrResultado {
@@ -122,6 +123,24 @@ func RealizarPrediccion(c *gin.Context) {
 		}
 		u = uint(prediccion)
 		//c.JSON(http.StatusOK, gin.H{"data": arrVecinos, "prediccion": prediccion})
+		if(len(chain.Addrs)!=0){
+			var datosEntrada chain.DatosEntrada
+			datosEntrada.PacienteDatos=inputData
+			datosEntrada.Kvalue=kvalue
+			chain.SendDatosEntrada(datosEntrada)
+			chain.BroadcastOpinion(int(u))
+		}
+		fmt.Print("ESPERANDO RESPUESTAS ")
+		for chain.ResultadoConsenso<0 && len(chain.Addrs)!=0{
+			//fmt.Print("ESPERANDO RESPUESTAS ")
+		}
+		fmt.Print("LLEGO ESPUESTAA ")
+		if(len(chain.Addrs)!=0){
+			u=uint(chain.ResultadoConsenso)
+			chain.ResultadoConsenso=-1
+		}else{
+			fmt.Println("Se retorno la prediccion local")
+		}
 		c.JSON(http.StatusOK, gin.H{})
 	}
 	//c.JSON(http.StatusUnauthorized, gin.H{"status": "Error al convertir data"})

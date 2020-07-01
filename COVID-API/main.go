@@ -27,8 +27,8 @@ func CORSMiddleware() gin.HandlerFunc {
 
 /*FIN CONSENSO VARIABLE*/
 func init(){
-	chain.iniciarCadena()
-	chain.resultadoConsenso=1000
+	go chain.IniciarCadena()
+
 }
 func main() {
 	r := gin.Default()
@@ -44,6 +44,9 @@ func main() {
 	r.POST("/prediccion/:k", controllers.RealizarPrediccion)
 	r.GET("/pred", controllers.GetPredicion)
 
+	//cargando data set para enviar a nodos
+	chain.CargarDataset()
 	//correr el servidor
 	r.Run()
 }
+

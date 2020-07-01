@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 	"strconv"
-
+	"fmt"
 	"../kmeans"
 	"../knn"
 	"../models"
@@ -60,7 +60,7 @@ func RealizarClustering(c *gin.Context) {
 }
 
 func GetDeaths(c *gin.Context) {
-	fmt.Println(chain.resultadoConsenso)
+	fmt.Println("DEMOSTRACION DE SI CAMBIA O NO OO :%s",chain.resultadoConsenso)
 	var setAnalisis []models.Analisis
 	models.DB.Find(&setAnalisis)
 	c.JSON(http.StatusOK, gin.H{"data": setAnalisis})

@@ -3,6 +3,7 @@ package main
 import (
 	"./controllers"
 	"./models"
+	"./chain"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,6 +22,13 @@ func CORSMiddleware() gin.HandlerFunc {
 
 		c.Next()
 	}
+}
+/*CONSENSO VARIABLES*/
+
+/*FIN CONSENSO VARIABLE*/
+func init(){
+	chain.iniciarCadena()
+	chain.resultadoConsenso=1000
 }
 func main() {
 	r := gin.Default()

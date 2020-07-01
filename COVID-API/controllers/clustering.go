@@ -7,6 +7,7 @@ import (
 	"../kmeans"
 	"../knn"
 	"../models"
+	"../chain"
 	"github.com/gin-gonic/gin"
 )
 
@@ -59,6 +60,7 @@ func RealizarClustering(c *gin.Context) {
 }
 
 func GetDeaths(c *gin.Context) {
+	fmt.Println(chain.resultadoConsenso)
 	var setAnalisis []models.Analisis
 	models.DB.Find(&setAnalisis)
 	c.JSON(http.StatusOK, gin.H{"data": setAnalisis})

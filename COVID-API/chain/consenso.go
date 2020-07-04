@@ -20,8 +20,6 @@ const (
 	puerto_analisis= 8002
 	puerto_notifica_opinion=8003
 	puerto_notificar_consenso=8004
-	//en el server deberia haber un puesto expecial para recibir los concesos,
-	//ese host deberia ser hardcodeado
 )
 const (
 	predA=0
@@ -262,7 +260,6 @@ func handleConsensoDeConsensos(conn net.Conn ){
 	go func() { chInfo <- info }()
 }
 func SendDatosEntrada(datosEntrada DatosEntrada){
-	fmt.Print("awfasdf")
 	for _,addr:=range Addrs{
 		fmt.Println(addr)
 		sendDatoEntrada(addr,datosEntrada)

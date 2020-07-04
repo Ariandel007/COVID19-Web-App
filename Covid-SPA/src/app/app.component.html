@@ -83,17 +83,16 @@
 <div *ngIf="seccion == 3">
 
   <div class="row center">
-    <input #box (keyup)="onKey(box.value)" type="text" placeholder="Ingrese N Vecinos">
-
-    <form #getDiagnostic="ngForm" (ngSubmit)="realizarPrediccion()">
-      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.temperatura">
-      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.tosSeca">
-      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.dolorGargante">
-      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.dolorCabeza">
-      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.dificultadRespirar">
-      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.presionPecho">
-      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="paciente.incapacidadParaHablar">
-
+    <form #getDiagnostic="ngForm" (ngSubmit)="realizarPrediccion()" class="form-knn">
+      <input #box (keyup)="onKey(box.value)" type="text" placeholder="Ingrese N Vecinos"><br>
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="Temperatura" required [(ngModel)]="paciente.temperatura">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="TosSeca" required [(ngModel)]="paciente.tosSeca">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="DolorGargante" required [(ngModel)]="paciente.dolorGargante">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="DolorCabeza" required [(ngModel)]="paciente.dolorCabeza">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="DificultadRespirar" required [(ngModel)]="paciente.dificultadRespirar">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="PresionPecho" required [(ngModel)]="paciente.presionPecho">
+      <input type="number" min=2 id="lname" name="lname" name="kNumber" placeholder="IncapacidadParaHablar" required [(ngModel)]="paciente.incapacidadParaHablar">
+      <br>
       <button [disabled]="!getDiagnostic.valid" class="button button3" type="submit">Calcular</button>
     </form>
     <div class="resultado_contenedor">
